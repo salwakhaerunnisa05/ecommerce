@@ -16,6 +16,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
+
 // ================================================
 // HALAMAN PUBLIK (Tanpa Login)
 // ================================================
@@ -26,6 +27,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Katalog Produk
 Route::get('/products', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/products/{slug}', [CatalogController::class, 'show'])->name('catalog.show');
+Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
+
 
 // ================================================
 // HALAMAN YANG BUTUH LOGIN (Customer)
@@ -110,4 +113,6 @@ Route::controller(GoogleController::class)->group(function () {
     // ================================================
     Route::get('/auth/google/callback', 'callback')
         ->name('auth.google.callback');
+
+        
 });
