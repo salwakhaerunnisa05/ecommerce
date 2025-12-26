@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -28,7 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -49,9 +48,27 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // RULES VALIDASI
+
+            'name'     => ['required', 'string', 'max:255'],
+            // ↑ Nama wajib, string, maksimal 255 char
+
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // ↑ unique:users = Cek tabel 'users', kolom 'email'.
+            //   Jika email sudah ada, validasi gagal. PENTING!
+
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            // ↑ confirmed = Laravel akan mencari field bernama 'password_confirmation'
+            //   dan memastikan nilainya SAMA PERSIS dengan field 'password'.
+            //   Biasanya field ini ada di form register: <input name="password_confirmation">
+
+        ], [
+            // CUSTOM MESSAGES
+            'name.required'      => 'Nama wajib diisi.',
+            'email.required'     => 'Email wajib diisi.',
+            'email.unique'       => 'Email sudah terdaftar. Gunakan email lain.',
+            'password.min'       => 'Password minimal 8 karakter agar aman.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
         ]);
     }
 
@@ -64,10 +81,10 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'name'     => $data['name'],
+            'email'    => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => 'customer',   
+            'role'     => 'customer',
         ]);
     }
 }
