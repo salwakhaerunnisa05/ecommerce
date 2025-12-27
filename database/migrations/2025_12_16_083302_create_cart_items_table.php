@@ -1,5 +1,4 @@
 <?php
-// database/migrations/xxxx_create_cart_items_table.php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -7,29 +6,35 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
-
+            
+            // Pastikan tabel 'carts' sudah dibuat di migrasi sebelumnya
             $table->foreignId('cart_id')
-                  ->constrained()
+                  ->constrained('carts') // Menyebutkan nama tabel secara eksplisit lebih aman
                   ->cascadeOnDelete();
 
+            // Pastikan tabel 'products' sudah dibuat di migrasi sebelumnya
             $table->foreignId('product_id')
-                  ->constrained()
+                  ->constrained('products')
                   ->cascadeOnDelete();
 
-            // Jumlah item
             $table->integer('quantity')->default(1);
-
             $table->timestamps();
 
-            // Satu produk hanya bisa satu entry per cart
+            // Constraint unik agar satu produk tidak duplikat dalam satu keranjang
             $table->unique(['cart_id', 'product_id']);
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('cart_items');

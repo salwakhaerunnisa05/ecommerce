@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Services\MidtransService;
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -36,5 +37,26 @@ class PaymentController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }   
+
+
+        public function success(Order $order)
+    {
+        if ($order->user_id !== auth()->id()) {
+            abort(403, 'Anda tidak memiliki akses ke pesanan ini.');
+        }
+        if ($order->status === 'pending') {
+            $order->update(['status' => 'processing', 'payment_status' => 'paid']);
+        }
+
+        return view('orders.success', compact('order'));
+    }
+    public function pending(Order $order)
+    {
+        if ($order->user_id !== auth()->id()) {
+            abort(403, 'Anda tidak memiliki akses ke pesanan ini.');
+        }
+
+        return view('orders.pending', compact('order'));
     }
 }

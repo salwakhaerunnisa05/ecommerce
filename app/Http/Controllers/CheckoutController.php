@@ -5,19 +5,32 @@ namespace App\Http\Controllers;
 
 use App\Services\OrderService;
 use Illuminate\Http\Request;
+use App\Models\Cart;
 
 class CheckoutController extends Controller
 {
     public function index()
-    {
-        // Pastikan keranjang tidak kosong
-        $cart = auth()->user()->cart;
-        if (!$cart || $cart->items->isEmpty()) {
-            return redirect()->route('cart.index')->with('error', 'Keranjang kosong.');
-        }
-
-        return view('checkout.index', compact('cart'));
+{
+    // 1. Ambil data cart user
+    $cart = Cart::where('user_id', auth()->id())->first();
+    
+    // 2. Jika cart tidak ada, arahkan balik atau buat koleksi kosong agar tidak error
+    if (!$cart) {
+        return redirect()->route('catalog.index')->with('error', 'Keranjang belanja Anda kosong.');
     }
+
+    // 3. Ambil items untuk menghitung subtotal
+    $cart_items = $cart->items; 
+
+    $subtotal = $cart_items->sum(function($item) {
+        return ($item->product->price ?? 0) * $item->quantity;
+    });
+
+    $shippingCost = 15000;
+
+    // PERBAIKAN: Kirim variabel 'cart' bukan 'cart->items'
+    return view('checkout.index', compact('cart', 'cart_items', 'subtotal', 'shippingCost'));
+}
 
     public function store(Request $request, OrderService $orderService)
     {
