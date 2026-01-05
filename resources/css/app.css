@@ -16,7 +16,7 @@
 
 :root {
   /* Warna Brand Toko */
-  --primary-color: #4f46e5; /* Indigo */
+  --primary-color: #c44444; /* Indigo */
   --secondary-color: #10b981; /* Emerald */
   --accent-color: #f59e0b; /* Amber */
 
@@ -33,8 +33,8 @@
 }
 
 .btn-primary:hover {
-  background-color: #4338ca;
-  border-color: #4338ca;
+  background-color: #f11919;
+  border-color: #e06161;
 }
 
 /* ================================================
@@ -44,6 +44,10 @@
 body {
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   color: var(--text-dark);
+}
+
+.hero-gradient {
+  background: rgb(241, 147, 147);
 }
 
 /* Navbar Custom */

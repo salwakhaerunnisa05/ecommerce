@@ -42,6 +42,8 @@ class ProductController extends Controller
 
         // Ambil data kategori untuk dropdown filter di view
         $categories = Category::active()->orderBy('name')->get();
+        // Hemat Memori
+        $products = Product::select('id', 'name', 'price', 'slug', 'image')->get();
 
         return view('admin.products.index', compact('products', 'categories'));
     }
@@ -54,6 +56,8 @@ class ProductController extends Controller
         // Ambil kategori untuk dropdown.
         // HANYA kategori yang aktif yang boleh dipilih.
         $categories = Category::active()->orderBy('name')->get();
+        // Hemat Memori
+        $products = Product::select('id', 'name', 'price', 'slug', 'image')->get();
 
         return view('admin.products.create', compact('categories'));
     }
@@ -102,6 +106,8 @@ class ProductController extends Controller
                 ->withInput()
                 ->with('error', 'Gagal menyimpan produk: ' . $e->getMessage());
         }
+        // Hemat Memori
+        $products = Product::select('id', 'name', 'price', 'slug', 'image')->get();
     }
 
     /**
@@ -111,7 +117,8 @@ class ProductController extends Controller
     {
         // Load semua relasi yang dibutuhkan untuk halaman detail.
         $product->load(['category', 'images', 'orderItems']);
-
+        // Hemat Memori
+        $products = Product::select('id', 'name', 'price', 'slug', 'image')->get();
         return view('admin.products.show', compact('product'));
     }
 
@@ -123,7 +130,8 @@ class ProductController extends Controller
         $categories = Category::active()->orderBy('name')->get();
         // Load gambar yang sudah ada agar bisa ditampilkan/dihapus di form edit.
         $product->load('images');
-
+        // Hemat Memori
+        $products = Product::select('id', 'name', 'price', 'slug', 'image')->get();
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
@@ -165,6 +173,8 @@ class ProductController extends Controller
             DB::rollBack();
             return back()->withInput()->with('error', 'Gagal update: ' . $e->getMessage());
         }
+        // Hemat Memori
+        $products = Product::select('id', 'name', 'price', 'slug', 'image')->get();
     }
 
     /**
@@ -187,6 +197,9 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', 'Gagal menghapus: ' . $e->getMessage());
         }
+    
+        // Hemat Memori
+        $products = Product::select('id', 'name', 'price', 'slug', 'image')->get();
     }
 
     // --- Helper Methods ---
@@ -213,6 +226,8 @@ class ProductController extends Controller
                 'sort_order' => $product->images()->count() + $index,
             ]);
         }
+        // Hemat Memori
+        $products = Product::select('id', 'name', 'price', 'slug', 'image')->get(); 
     }
 
     protected function deleteImages(array $imageIds): void
@@ -235,5 +250,7 @@ class ProductController extends Controller
 
         // Set gambar yang dipilih jadi primary
         $product->images()->where('id', $imageId)->update(['is_primary' => true]);
+        // Hemat Memori
+        $products = Product::select('id', 'name', 'price', 'slug', 'image')->get();
     }
 }

@@ -5,11 +5,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Payment;
+use App\Events\OrderPaidEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+
 class MidtransNotificationController extends Controller
 {
+    private function setSuccess(Order $order)
+    {
+    $order->update([
+        'status' => 'paid',
+        'paid_at' => now(),
+    ]);
+
+    // Fire & Forget
+    event(new OrderPaidEvent($order));
+}
     /**
      * Handle incoming webhook notification from Midtrans.
      * URL: POST /midtrans/notification

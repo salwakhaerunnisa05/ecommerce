@@ -57,6 +57,10 @@ return new class extends Migration
 
             // Index single: Sering filter "Produk Unggulan"
             $table->index('is_featured');
+
+            $table->string('slug')->index(); // Cepat dicari
+            $table->decimal('price')->index(); // Cepat diurutkan
+            $table->foreignId('category_id')->constrained(); // Foreign Key otomatis diindex
         });
     }
 

@@ -9,7 +9,7 @@
 
 @section('content')
     {{-- Hero Section --}}
-    <section class="bg-primary text-white py-5">
+    <section class="hero-gradient py-5 text-white">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
@@ -25,8 +25,8 @@
                     </a>
                 </div>
                 <div class="col-lg-6 d-none d-lg-block text-center">
-                    <img src="{{ asset('images/hero-shopping.svg') }}"
-                         alt="Shopping" class="img-fluid" style="max-height: 400px;">
+                    <img src="{{ asset('images/insatax2.png') }}"
+                         alt="Shopping" class="img-fluid" style="max-height: 700px;">
                 </div>
             </div>
         </div>
