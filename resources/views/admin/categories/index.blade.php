@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-12">
         {{-- Flash Message --}}
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show">

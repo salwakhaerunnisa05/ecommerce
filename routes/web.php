@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\PaymentController; 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
@@ -21,6 +22,15 @@ use App\Http\Controllers\MidtransNotificationController;
 // ================================================
 // HALAMAN PUBLIK (Tanpa Login)
 // ================================================
+
+
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+
+    Route::get('/reports/export-sales', function () {
+        return 'Export laporan penjualan';
+    })->name('reports.export-sales');
+
+});
 
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');

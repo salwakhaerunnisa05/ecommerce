@@ -2,6 +2,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;  
+use App\Models\User; 
 
 class ProfileUpdateRequest extends FormRequest
 {
@@ -10,7 +12,7 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
