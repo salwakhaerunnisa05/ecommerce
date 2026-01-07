@@ -90,6 +90,7 @@
                             <a href="#" class="btn btn-dark" style="width: fit-content;">
                                 Lihat Promo
                             </a>
+                            <img src="images/vocer3.png" class="promo-img-wrappers" alt="">
                         </div>
                     </div>
                 </div>
