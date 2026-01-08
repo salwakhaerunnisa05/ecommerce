@@ -107,3 +107,32 @@ body {
     z-index: 1;
     transition: transform 0.4s ease;
 }
+
+.notifcart {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    background-color: var(--primary-color);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-size: 0.6rem;
+    font-weight: 600;
+}
+
+.bglogin { 
+  background: #edbfbf;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bglogintekslogin { 
+  background: #edbfbf;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

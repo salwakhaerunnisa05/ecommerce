@@ -61,7 +61,7 @@ FUNGSI: Navigation bar untuk customer
                         $cartCount = auth()->user()->cart?->items()->count() ?? 0;
                         @endphp
                         @if($cartCount > 0)
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary"
+                        <span class="notifcart"
                             style="font-size: 0.6rem;">
                             {{ $cartCount }}
                         </span>
